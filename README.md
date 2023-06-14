@@ -29,7 +29,14 @@ The Smart Elevator is a modern elevator that optimizes calls by prioritizing tho
 
 ## Project TODOs
 
-- Implement the smart elevator.
+- Organize classes into folders and namespaces
+- Implement the smart elevator
+- Change collection objects to interfaces
+- Improve namings
+- Add documentation in the code
 - Implement validation for floors between 1 and the maximum height.
 - Refactor the call function to accept only the origin and direction initially and return a promise allowing to enqueue target floor calls (more than 1 since several people could be waiting for the elevator).
+- Implement a multi-elevator which has multiple elevators operating on a modern logic
+- Add a statistical model for generating elevator use cases for benchmark purposes (chasing the lowest number of iterations serving all customers)
 - Explore on the other modern optimizations of elevator functioning
+- Move from 1 floor per iteration to arriving at a floor, generating a list of traversed floors

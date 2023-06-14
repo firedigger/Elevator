@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Elevator
+namespace Elevator.DataObjects
 {
-    public class ElevatorCall
+    public class DirectedElevatorCall
     {
         public uint SourceFloor { get; set; }
-        public uint DestinationFloor { get; set; }
+        public Direction Direction { get; set; }
     }
 }
