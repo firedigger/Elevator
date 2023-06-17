@@ -4,27 +4,25 @@
     {
         private readonly TaskCompletionSource<uint> _queuedFloor;
         private readonly ICollection<WrappedCall<uint>> _floorQueue;
-        private readonly object _lockObject;
         private readonly Task _elevatorArrivedForPickup;
 
-        public AsynchonorousElevatorResponse(ICollection<WrappedCall<uint>> floorQueue, object lockObject, Task elevatorArrivedForPickup, TaskCompletionSource<uint> queuedFloor)
+        public AsynchonorousElevatorResponse(ICollection<WrappedCall<uint>> floorQueue, Task elevatorArrivedForPickup, TaskCompletionSource<uint> queuedFloor)
         {
             _floorQueue = floorQueue;
-            _lockObject = lockObject;
             _elevatorArrivedForPickup = elevatorArrivedForPickup;
             _queuedFloor = queuedFloor;
         }
 
-        public Task SelectFloor(uint floor)
+        public async Task SelectFloor(uint floor)
         {
-            //queue after the elevator has arrived for pickup or throw exception if it hasn't?
+            await _elevatorArrivedForPickup;
             var tsk = new TaskCompletionSource();
-            lock (_lockObject)
+            lock (_floorQueue)
             {
                 _floorQueue.Add(new WrappedCall<uint>(tsk, floor));
             }
-            _queuedFloor.SetResult(floor);
-            return tsk.Task;
+            _queuedFloor.SetResult(floor); //TODO: what to do about calling elevator in the opposite direction? write a test for it, and figure it out then
+            await tsk.Task;
         }
 
         public Task ElevatorArrivedForPickup => _elevatorArrivedForPickup;

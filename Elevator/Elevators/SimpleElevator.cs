@@ -8,7 +8,7 @@ public class SimpleElevator
     private readonly ConcurrentQueue<CompleteElevatorCall> queuedCalls = new();
     private readonly Queue<uint> queuedFloors = new();
 
-    public IEnumerable<uint> FloorsEnumerator(bool breakOnCompleteCalls = false) //TODO: make sync Enumerable
+    public IEnumerable<uint> FloorsEnumerator(bool breakOnCompleteCalls = false)
     {
         yield return currentFloor;
         while (!breakOnCompleteCalls || !queuedCalls.IsEmpty || queuedFloors.Count > 0)
